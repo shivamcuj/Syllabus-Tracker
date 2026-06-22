@@ -533,19 +533,26 @@ function renderSchedule() {
   if (!tasks.length) { grid.innerHTML = '<div class="empty-state"><p>No tasks yet. Click "+ Add Task" to get started.</p></div>'; return; }
   const now = new Date();
   const currentHour = now.getHours();
+  const maxH = {};
+  tasks.forEach(t => {
+    const sh = parseInt(t.start), sm = parseInt(t.start.split(':')[1]);
+    const eh = parseInt(t.end), em = parseInt(t.end.split(':')[1]);
+    const h = ((eh - sh) + (em - sm) / 60) * 40;
+    const startH = sh;
+    if (!maxH[startH] || h > maxH[startH]) maxH[startH] = Math.max(h, 40);
+  });
   let html = '';
   for (let h = 0; h < 24; h++) {
     const label = String(h).padStart(2,'0') + ':00';
     const isCurrent = viewDate === state.today && h === currentHour;
-    const slots = tasks.filter(t => {
-      const sh = parseInt(t.start), eh = parseInt(t.end);
-      return sh <= h && eh > h;
-    });
-    html += `<div class="hour-row${isCurrent?' current-hour':''}" id="hourRow${h}"><div class="hour-label">${label}</div><div class="hour-slot">`;
+    const slotH = Math.max(40, maxH[h] || 40);
+    const slots = tasks.filter(t => parseInt(t.start) === h);
+    html += `<div class="hour-row${isCurrent?' current-hour':''}" id="hourRow${h}"><div class="hour-label">${label}</div><div class="hour-slot" style="min-height:${slotH}px">`;
     slots.forEach(t => {
-      const sh = parseInt(t.start), sm = parseInt(t.start.split(':')[1]);
-      const eh = parseInt(t.end), em = parseInt(t.end.split(':')[1]);
-      const top = (sm/60)*40; const height = ((eh-sh)+(em-sm)/60)*40;
+      const sm = parseInt(t.start.split(':')[1]);
+      const sh = parseInt(t.start), eh = parseInt(t.end), em = parseInt(t.end.split(':')[1]);
+      const top = (sm / 60) * 40;
+      const height = ((eh - sh) + (em - sm) / 60) * 40;
       const done = t.done_dates.includes(viewDate);
       html += `<div class="task-chip chip-toggle${done?' done':''}" style="top:${top}px;height:${Math.max(height,20)}px;background:${t.color}" onclick="toggleTask(${t.id})" ondblclick="event.stopPropagation();editTask(${t.id})" title="${t.title} (double-click to edit)">
         <span class="chip-title">${t.title}</span>
