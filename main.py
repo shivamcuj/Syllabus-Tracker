@@ -11,14 +11,15 @@ DATA_FILE = "data.json"
 
 DEFAULT_DATA = {
     "tasks": [
-        {"id": 1, "category": "Study", "title": "Mathematics", "start": "08:00", "end": "10:00", "color": "#6366f1", "done_dates": [], "archived": False},
-        {"id": 2, "category": "Gym", "title": "Workout Session", "start": "06:00", "end": "07:30", "color": "#f43f5e", "done_dates": [], "archived": False},
+        {"id": 1, "category": "Study", "title": "Mathematics", "start": "08:00", "end": "10:00", "color": "#4f46e5", "done_dates": [], "archived": False},
+        {"id": 2, "category": "Gym", "title": "Workout Session", "start": "06:00", "end": "07:30", "color": "#ef4444", "done_dates": [], "archived": False},
         {"id": 3, "category": "Art of Living", "title": "Volunteer Work", "start": "17:00", "end": "19:00", "color": "#10b981", "done_dates": [], "archived": False},
         {"id": 4, "category": "Coding", "title": "DSA Practice", "start": "20:00", "end": "22:00", "color": "#f59e0b", "done_dates": [], "archived": False},
-        {"id": 5, "category": "IIT Madras", "title": "BS Data Science Lecture", "start": "14:00", "end": "16:00", "color": "#8b5cf6", "done_dates": [], "archived": False},
-        {"id": 6, "category": "Coding", "title": "Python Programming", "start": "10:30", "end": "12:00", "color": "#06b6d4", "done_dates": [], "archived": False},
-        {"id": 7, "category": "Study", "title": "Physics Revision", "start": "16:00", "end": "17:00", "color": "#ec4899", "done_dates": [], "archived": False},
+        {"id": 5, "category": "IIT Madras", "title": "BS Data Science Lecture", "start": "14:00", "end": "16:00", "color": "#06b6d4", "done_dates": [], "archived": False},
+        {"id": 6, "category": "Coding", "title": "Python Programming", "start": "10:30", "end": "12:00", "color": "#f59e0b", "done_dates": [], "archived": False},
+        {"id": 7, "category": "Study", "title": "Physics Revision", "start": "16:00", "end": "17:00", "color": "#4f46e5", "done_dates": [], "archived": False},
     ],
+    "theme": "dark",
     "wallpaper": "gradient_1",
     "custom_wallpaper": None,
     "next_id": 8
@@ -26,11 +27,11 @@ DEFAULT_DATA = {
 
 CATEGORIES = ["Study", "Gym", "Art of Living", "Coding", "IIT Madras", "Other"]
 CATEGORY_COLORS = {
-    "Study": "#6366f1",
-    "Gym": "#f43f5e",
+    "Study": "#4f46e5",
+    "Gym": "#ef4444",
     "Art of Living": "#10b981",
     "Coding": "#f59e0b",
-    "IIT Madras": "#8b5cf6",
+    "IIT Madras": "#06b6d4",
     "Other": "#64748b"
 }
 
@@ -134,14 +135,20 @@ def get_stats():
 @app.route("/api/wallpaper", methods=["GET"])
 def get_wallpaper():
     data = load_data()
-    return jsonify({"wallpaper": data.get("wallpaper", "gradient_1"), "custom": data.get("custom_wallpaper")})
+    return jsonify({
+        "wallpaper": data.get("wallpaper", "gradient_1"),
+        "custom": data.get("custom_wallpaper"),
+        "theme": data.get("theme", "dark")
+    })
 
 @app.route("/api/wallpaper", methods=["POST"])
 def set_wallpaper():
     data = load_data()
     body = request.json
-    data["wallpaper"] = body.get("wallpaper", "gradient_1")
-    data["custom_wallpaper"] = body.get("custom_wallpaper", None)
+    data["wallpaper"] = body.get("wallpaper", data.get("wallpaper", "gradient_1"))
+    data["custom_wallpaper"] = body.get("custom_wallpaper", data.get("custom_wallpaper"))
+    if "theme" in body:
+        data["theme"] = body["theme"]
     save_data(data)
     return jsonify({"success": True})
 
