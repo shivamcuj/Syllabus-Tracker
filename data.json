@@ -1,0 +1,77 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "category": "Study",
+      "title": "Mathematics",
+      "start": "08:00",
+      "end": "10:00",
+      "color": "#5153c8",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 2,
+      "category": "Gym",
+      "title": "Workout Session",
+      "start": "06:00",
+      "end": "07:30",
+      "color": "#f43f5e",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 3,
+      "category": "Art of Living",
+      "title": "Volunteer Work",
+      "start": "17:00",
+      "end": "19:00",
+      "color": "#10b981",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 4,
+      "category": "Coding",
+      "title": "DSA Practice",
+      "start": "20:00",
+      "end": "22:00",
+      "color": "#f59e0b",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 5,
+      "category": "IIT Madras",
+      "title": "BS Data Science Lecture",
+      "start": "14:00",
+      "end": "16:00",
+      "color": "#8b5cf6",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 6,
+      "category": "Coding",
+      "title": "Python Programming",
+      "start": "10:30",
+      "end": "12:00",
+      "color": "#06b6d4",
+      "done_dates": [],
+      "archived": false
+    },
+    {
+      "id": 7,
+      "category": "Study",
+      "title": "Physics Revision",
+      "start": "16:00",
+      "end": "17:00",
+      "color": "#5153c8",
+      "done_dates": [],
+      "archived": false
+    }
+  ],
+  "wallpaper": "gradient_1",
+  "custom_wallpaper": null,
+  "next_id": 8
+}
