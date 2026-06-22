@@ -703,7 +703,7 @@ function refreshAll() {
   }
 }
 
-document.getElementById('dateBadge').textContent = new Date().toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeModal(); closeConfirm(false); }
   if (e.key === 'Enter' && document.getElementById('taskModal').classList.contains('active') && e.target.closest('.modal')) {
