@@ -11,16 +11,6 @@
       "archived": false
     },
     {
-      "id": 2,
-      "category": "Gym",
-      "title": "Workout Session",
-      "start": "06:00",
-      "end": "07:30",
-      "color": "#f43f5e",
-      "done_dates": [],
-      "archived": false
-    },
-    {
       "id": 3,
       "category": "Art of Living",
       "title": "Volunteer Work",
@@ -71,7 +61,8 @@
       "archived": false
     }
   ],
-  "wallpaper": "gradient_1",
-  "custom_wallpaper": null,
-  "next_id": 8
+  "wallpaper": "custom",
+  "custom_wallpaper": "https://4kwallpapers.com/images/walls/thumbs_3t/26564.jpg",
+  "next_id": 8,
+  "theme": "dark"
 }
