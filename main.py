@@ -36,14 +36,22 @@ CATEGORY_COLORS = {
 }
 
 def load_data():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r") as f:
-            return json.load(f)
+    try:
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, "r") as f:
+                return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        pass
     return DEFAULT_DATA.copy()
 
 def save_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=2)
+
+def get_next_id(tasks):
+    if not tasks:
+        return 1
+    return max(t["id"] for t in tasks) + 1
 
 @app.route("/")
 def index():
@@ -60,8 +68,10 @@ def get_tasks():
 def add_task():
     data = load_data()
     body = request.json
+    if not body.get("title", "").strip():
+        return jsonify({"error": "Title is required"}), 400
     new_task = {
-        "id": data.get("next_id", 100),
+        "id": get_next_id(data["tasks"]),
         "category": body.get("category", "Other"),
         "title": body.get("title", "New Task"),
         "start": body.get("start", "09:00"),
@@ -71,7 +81,7 @@ def add_task():
         "archived": False
     }
     data["tasks"].append(new_task)
-    data["next_id"] = data.get("next_id", 100) + 1
+    data["next_id"] = get_next_id(data["tasks"])
     save_data(data)
     return jsonify({"task": new_task, "today": str(date.today())})
 
@@ -122,10 +132,21 @@ def get_stats():
     tasks = [t for t in data["tasks"] if not t.get("archived", False)]
     total = len(tasks)
     done_today = sum(1 for t in tasks if today in t.get("done_dates", []))
-    streak = 0
+    done_dates_set = set()
     for t in tasks:
-        if t.get("done_dates"):
-            streak = max(streak, len(t["done_dates"]))
+        for d in t.get("done_dates", []):
+            done_dates_set.add(d)
+    streak = 0
+    from datetime import timedelta
+    check = date.today()
+    while str(check) in done_dates_set:
+        streak += 1
+        check -= timedelta(days=1)
+    if streak == 0:
+        check = date.today() - timedelta(days=1)
+        while str(check) in done_dates_set:
+            streak += 1
+            check -= timedelta(days=1)
     cats = {}
     for t in tasks:
         c = t["category"]
