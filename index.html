@@ -7,7 +7,7 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#16213e;--card:#1e1e36;--border:#2a2a4a;--text:#e0e0f0;--text2:#8888aa;--primary:#4f46e5;--accent:#06b6d4;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--bg-grad-1:#1a1a3e;--bg-grad-2:#16213e}
-:root.light{--bg:#f0f0f8;--surface:#ffffff;--surface2:#f4f4fb;--card:#ffffff;--border:#d0d0e0;--text:#1a1a2e;--text2:#6b6b8a;--primary:#4f46e5;--accent:#0891b2;--shadow:0 4px 24px rgba(0,0,0,.08);--bg-grad-1:#e0e0f0;--bg-grad-2:#d0d0ea}
+:root.light{--bg:#f2f3f8;--surface:#ffffff;--surface2:#eaecf4;--card:#ffffff;--border:#e0e2ec;--text:#18182a;--text2:#6b6f8e;--primary:#4f46e5;--accent:#0891b2;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.05),0 4px 20px rgba(0,0,0,.04);--bg-grad-1:#ecedf4;--bg-grad-2:#e0e2f0}
 body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-image:radial-gradient(ellipse at 20% 50%,var(--bg-grad-1) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,var(--bg-grad-2) 0%,transparent 60%)}
 .theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:1rem}
 .theme-toggle:hover{background:var(--surface);border-color:var(--primary)}
@@ -132,6 +132,27 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
 .current-hour{border-left:3px solid var(--accent)!important}
 .current-hour .hour-label{color:var(--accent)!important;font-weight:700}
 .chip-toggle{cursor:pointer}
+:root.light .schedule .hour-row{border-color:rgba(0,0,0,.06)}
+:root.light .schedule .hour-label{border-color:var(--border)}
+:root.light .task-item .task-meta{color:#8b8fa8}
+:root.light .cat-chip.active{border-color:rgba(79,70,229,.3);box-shadow:0 0 16px rgba(79,70,229,.15)}
+:root.light .stat-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.08)}
+:root.light .modal{box-shadow:0 8px 40px rgba(0,0,0,.12)}
+:root.light .toast{box-shadow:0 4px 24px rgba(0,0,0,.1)}
+:root.light .form-group input:focus,.form-group select:focus{box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+:root.light .btn-ghost:hover{background:var(--surface2)}
+:root.light header{backdrop-filter:blur(12px)}
+:root.light .checkbox{border-color:#c8cad8}
+:root.light .checkbox:hover{border-color:var(--primary)}
+:root.light .date-nav button{background:var(--surface);border-color:#d8dae6}
+:root.light .date-nav button:hover{background:var(--surface2);border-color:var(--primary)}
+:root.light .search-input{background:var(--surface);border-color:#d8dae6}
+:root.light .search-input:focus{box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+:root.light .cat-chip.active{border-color:rgba(79,70,229,.4);box-shadow:0 0 12px rgba(79,70,229,.15)}
+:root.light .current-hour{border-left-color:var(--primary)!important}
+:root.light .current-hour .hour-label{color:var(--primary)!important}
+:root.light .wallpaper-opt.active{border-color:var(--primary);box-shadow:0 0 16px rgba(79,70,229,.2)}
+:root.light .modal-overlay{background:rgba(0,0,0,.25)}
 @media(max-width:600px){header{flex-direction:column;gap:12px;text-align:center}.stats-grid{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.schedule .hour-row{grid-template-columns:40px 1fr}.schedule .hour-label{font-size:.6rem;padding:4px 6px}}
 </style>
 </head>
