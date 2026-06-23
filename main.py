@@ -9,6 +9,12 @@ CORS(app)
 
 DATA_FILE = "data.json"
 
+DEFAULT_CATEGORIES = ["Study", "Gym", "Art of Living", "Coding", "IIT Madras", "Other"]
+DEFAULT_CATEGORY_COLORS = {
+    "Study": "#4f46e5", "Gym": "#ef4444", "Art of Living": "#10b981",
+    "Coding": "#f59e0b", "IIT Madras": "#06b6d4", "Other": "#64748b"
+}
+
 DEFAULT_DATA = {
     "tasks": [
         {"id": 1, "category": "Study", "title": "Mathematics", "start": "08:00", "end": "10:00", "color": "#4f46e5", "done_dates": [], "archived": False},
@@ -19,20 +25,12 @@ DEFAULT_DATA = {
         {"id": 6, "category": "Coding", "title": "Python Programming", "start": "10:30", "end": "12:00", "color": "#f59e0b", "done_dates": [], "archived": False},
         {"id": 7, "category": "Study", "title": "Physics Revision", "start": "16:00", "end": "17:00", "color": "#4f46e5", "done_dates": [], "archived": False},
     ],
+    "categories": list(DEFAULT_CATEGORIES),
+    "category_colors": dict(DEFAULT_CATEGORY_COLORS),
     "theme": "dark",
     "wallpaper": "gradient_1",
     "custom_wallpaper": None,
     "next_id": 8
-}
-
-CATEGORIES = ["Study", "Gym", "Art of Living", "Coding", "IIT Madras", "Other"]
-CATEGORY_COLORS = {
-    "Study": "#4f46e5",
-    "Gym": "#ef4444",
-    "Art of Living": "#10b981",
-    "Coding": "#f59e0b",
-    "IIT Madras": "#06b6d4",
-    "Other": "#64748b"
 }
 
 def load_data():
@@ -70,13 +68,14 @@ def add_task():
     body = request.json
     if not body.get("title", "").strip():
         return jsonify({"error": "Title is required"}), 400
+    cat_colors = data.get("category_colors", DEFAULT_CATEGORY_COLORS)
     new_task = {
         "id": get_next_id(data["tasks"]),
         "category": body.get("category", "Other"),
         "title": body.get("title", "New Task"),
         "start": body.get("start", "09:00"),
         "end": body.get("end", "10:00"),
-        "color": body.get("color", CATEGORY_COLORS.get(body.get("category", "Other"), "#64748b")),
+        "color": body.get("color", cat_colors.get(body.get("category", "Other"), "#64748b")),
         "done_dates": [],
         "archived": False
     }
@@ -173,9 +172,53 @@ def set_wallpaper():
     save_data(data)
     return jsonify({"success": True})
 
+def get_cat_data(data=None):
+    if data is None:
+        data = load_data()
+    cats = data.get("categories", DEFAULT_CATEGORIES)
+    colors = data.get("category_colors", DEFAULT_CATEGORY_COLORS)
+    return cats, colors
+
 @app.route("/api/categories", methods=["GET"])
 def get_categories():
-    return jsonify({"categories": CATEGORIES, "colors": CATEGORY_COLORS})
+    data = load_data()
+    cats, colors = get_cat_data(data)
+    return jsonify({"categories": cats, "colors": colors})
+
+@app.route("/api/categories", methods=["POST"])
+def add_category():
+    data = load_data()
+    body = request.json
+    name = body.get("name", "").strip()
+    if not name:
+        return jsonify({"error": "Category name is required"}), 400
+    cats, colors = get_cat_data(data)
+    if name in cats:
+        return jsonify({"error": "Category already exists"}), 409
+    color = body.get("color", "#64748b")
+    cats.append(name)
+    colors[name] = color
+    data["categories"] = cats
+    data["category_colors"] = colors
+    save_data(data)
+    return jsonify({"success": True, "categories": cats, "colors": colors})
+
+@app.route("/api/categories/<name>", methods=["DELETE"])
+def delete_category(name):
+    data = load_data()
+    cats, colors = get_cat_data(data)
+    if name not in cats:
+        return jsonify({"error": "Not found"}), 404
+    cats.remove(name)
+    colors.pop(name, None)
+    data["categories"] = cats
+    data["category_colors"] = colors
+    for t in data["tasks"]:
+        if t.get("category") == name:
+            t["category"] = "Other"
+            t["color"] = colors.get("Other", "#64748b")
+    save_data(data)
+    return jsonify({"success": True, "categories": cats, "colors": colors})
 
 if __name__ == "__main__":
     app.run(debug=True, port=5050)

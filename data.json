@@ -64,5 +64,21 @@
   "wallpaper": "custom",
   "custom_wallpaper": "https://4kwallpapers.com/images/walls/thumbs_3t/26564.jpg",
   "next_id": 8,
-  "theme": "dark"
+  "theme": "dark",
+  "categories": [
+    "Study",
+    "Gym",
+    "Art of Living",
+    "Coding",
+    "IIT Madras",
+    "Other"
+  ],
+  "category_colors": {
+    "Study": "#4f46e5",
+    "Gym": "#ef4444",
+    "Art of Living": "#10b981",
+    "Coding": "#f59e0b",
+    "IIT Madras": "#06b6d4",
+    "Other": "#64748b"
+  }
 }

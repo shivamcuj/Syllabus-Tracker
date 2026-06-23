@@ -686,20 +686,72 @@ function renderTasks() {
 
 function setFilter(cat) { filterCategory = cat; renderTasks(); }
 
+const CAT_COLOR_PALETTE = ['#4f46e5','#ef4444','#10b981','#f59e0b','#06b6d4','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16','#22d3ee'];
+
+function nextCatColor() {
+  const used = Object.values(state.colors);
+  for (const c of CAT_COLOR_PALETTE) { if (!used.includes(c)) return c; }
+  return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+}
+
 function renderSettings() {
   const wg = document.getElementById('wallpaperGrid');
   const grads = ['gradient_1','gradient_2','gradient_3','gradient_4','gradient_5','gradient_6'];
   wg.innerHTML = grads.map(g => `<div class="wallpaper-opt ${state.wallpaper===g?'active':''}" onclick="setWallpaper('${g}')"><div class="${g}" style="width:100%;height:100%"></div></div>`).join('');
   document.getElementById('customWallpaperInput').value = state.customWallpaper || '';
   const cs = document.getElementById('categorySettings');
-  cs.innerHTML = state.categories.map(c => {
+  cs.innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:12px;align-items:center">
+      <input type="text" id="newCatInput" placeholder="New category name" style="flex:1;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.85rem;outline:none" onkeydown="if(event.key==='Enter')addCategory()">
+      <button class="btn btn-sm btn-primary" onclick="addCategory()">+ Add</button>
+    </div>
+  ` +
+  state.categories.map(c => {
     const col = state.colors[c] || '#64748b';
+    const removable = c !== 'Other';
     return `<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-      <span style="width:14px;height:14px;border-radius:50%;background:${col}"></span>
-      <span style="flex:1;font-size:.875rem">${c}</span>
+      <span style="width:14px;height:14px;border-radius:50%;background:${col};flex-shrink:0"></span>
+      <span style="flex:1;font-size:.875rem">${c}${c==='Other'?' <span style="font-size:.65rem;color:var(--text2)">(default)</span>':''}</span>
       <input type="color" value="${col}" onchange="updateCategoryColor('${c}',this.value)" style="width:36px;height:30px;padding:2px;border-radius:6px;background:transparent;border:1px solid var(--border);cursor:pointer">
+      ${removable ? `<button class="btn btn-sm btn-ghost btn-icon" onclick="removeCategory('${c}')" title="Delete category" style="color:#ef4444;font-size:.85rem">&#10005;</button>` : ''}
     </div>`;
   }).join('');
+}
+
+async function addCategory() {
+  const input = document.getElementById('newCatInput');
+  const name = input.value.trim();
+  if (!name) { showToast('Enter a category name', 'error'); return; }
+  if (state.categories.includes(name)) { showToast('Category already exists', 'error'); return; }
+  const color = nextCatColor();
+  if (isOnline && isFlaskMode()) {
+    try {
+      const res = await getApi('/api/categories', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name,color}) });
+      state.categories = res.categories; state.colors = res.colors;
+      input.value = ''; renderSettings(); showToast('Category added', 'success'); return;
+    } catch(e) { showToast('Failed to add category', 'error'); return; }
+  }
+  state.categories.push(name);
+  state.colors[name] = color;
+  saveLocal(); input.value = ''; renderSettings(); showToast('Category added', 'success');
+}
+
+async function removeCategory(name) {
+  if (name === 'Other') return;
+  const confirmed = await showConfirm('Delete "'+name+'"? Tasks in this category will be moved to "Other".', 'Delete');
+  if (!confirmed) return;
+  if (isOnline && isFlaskMode()) {
+    try {
+      const res = await getApi('/api/categories/' + encodeURIComponent(name), { method:'DELETE' });
+      state.categories = res.categories; state.colors = res.colors;
+      state.tasks.forEach(t => { if (t.category === name) { t.category = 'Other'; t.color = state.colors['Other'] || '#64748b'; } });
+      renderSettings(); refreshAll(); showToast('Category deleted', 'success'); return;
+    } catch(e) { showToast('Failed to delete category', 'error'); return; }
+  }
+  state.categories = state.categories.filter(c => c !== name);
+  delete state.colors[name];
+  state.tasks.forEach(t => { if (t.category === name) { t.category = 'Other'; t.color = state.colors['Other'] || '#64748b'; } });
+  saveLocal(); renderSettings(); refreshAll(); showToast('Category deleted', 'success');
 }
 
 // Modal
