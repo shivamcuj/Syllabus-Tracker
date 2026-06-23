@@ -5,285 +5,302 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syllabus Tracker</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a1a2e">
+<meta name="theme-color" content="#121218">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#16213e;--card:#1e1e36;--border:#2a2a4a;--text:#e0e0f0;--text2:#8888aa;--primary:#4f46e5;--accent:#06b6d4;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--bg-grad-1:#1a1a3e;--bg-grad-2:#16213e}
-:root.light{--bg:#f2f3f8;--surface:#ffffff;--surface2:#eaecf4;--card:#ffffff;--border:#e0e2ec;--text:#18182a;--text2:#6b6f8e;--primary:#4f46e5;--accent:#0891b2;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,.05),0 4px 20px rgba(0,0,0,.04);--bg-grad-1:#ecedf4;--bg-grad-2:#e0e2f0}
-body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;background-image:radial-gradient(ellipse at 20% 50%,var(--bg-grad-1) 0%,transparent 60%),radial-gradient(ellipse at 80% 50%,var(--bg-grad-2) 0%,transparent 60%)}
-.theme-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:1rem}
-.theme-toggle:hover{background:var(--surface);border-color:var(--primary)}
-.app{max-width:1200px;margin:0 auto;padding:20px}
-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:24px;backdrop-filter:blur(10px)}
-header h1{font-size:1.3rem;display:flex;align-items:center;gap:10px}
-header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.header-actions{display:flex;gap:12px;align-items:center}
-.mode-badge{padding:4px 14px;border-radius:20px;font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text2)}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;border:none;cursor:pointer;font-size:.875rem;font-weight:600;transition:all .2s}
-.btn-primary{background:linear-gradient(135deg,var(--primary),#4f46e5);color:#fff}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(99,102,241,.4)}
-.btn-danger{background:#ef4444;color:#fff}
-.btn-danger:hover{background:#dc2626}
-.btn-sm{padding:6px 12px;font-size:.75rem}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--card);color:var(--text)}
-.btn-icon{width:36px;height:36px;padding:0;display:inline-flex;align-items:center;justify-content:center;border-radius:8px}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .2s}
-.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.stat-card .label{font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:8px}
-.stat-card .value{font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--text),var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.stat-card .sub{font-size:.8rem;color:var(--text2);margin-top:4px}
-.layout{display:grid;grid-template-columns:1fr 360px;gap:24px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
-.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+:root{--bg:#0a0a0f;--surface:#121218;--surface2:#181820;--card:#121218;--border:#1e1e2a;--text:#e4e4ed;--text2:#7c7c92;--primary:#4f46e5;--accent:#06b6d4;--radius:8px;--shadow:0 1px 2px rgba(0,0,0,.2),0 4px 12px rgba(0,0,0,.15);--shadow-lg:0 4px 16px rgba(0,0,0,.25)}
+:root.light{--bg:#f5f5f8;--surface:#ffffff;--surface2:#f0f0f8;--card:#ffffff;--border:#e2e2ee;--text:#12121a;--text2:#6b6b82;--primary:#4f46e5;--accent:#0891b2;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);--shadow-lg:0 4px 16px rgba(0,0,0,.06)}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:.875rem;line-height:1.6;min-height:100vh}
+.app-layout{display:flex;min-height:100vh}
+.sidebar{width:220px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:2px}
+.sidebar .app-title{font-size:1rem;font-weight:700;padding:10px 12px;margin-bottom:16px;display:flex;align-items:center;gap:10px;color:var(--text)}
+.sidebar .app-title svg{color:var(--primary);flex-shrink:0}
+.sidebar .tab{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.875rem;font-weight:500;transition:all .15s;width:100%;text-align:left}
+.sidebar .tab:hover{background:var(--surface2);color:var(--text)}
+.sidebar .tab.active{background:var(--primary);color:#fff}
+.sidebar .tab svg{width:18px;height:18px;flex-shrink:0}
+.sidebar .bottom{margin-top:auto;padding-top:16px;border-top:1px solid var(--border)}
+.sidebar .theme-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.875rem;transition:all .15s;width:100%}
+.sidebar .theme-btn:hover{background:var(--surface2);color:var(--text)}
+.sidebar .theme-btn svg{width:18px;height:18px;flex-shrink:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px}
+.topbar .date-nav{display:flex;align-items:center;gap:6px}
+.topbar .date-nav button{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .15s}
+.topbar .date-nav button:hover{background:var(--surface2);border-color:var(--primary);color:var(--text)}
+.topbar .date-nav .date-label{font-size:.85rem;font-weight:500;color:var(--text);min-width:140px;text-align:center;cursor:pointer;padding:4px 8px;border-radius:6px}
+.topbar .date-nav .date-label:hover{background:var(--card)}
+.topbar .date-nav input[type=date]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.topbar .header-actions{display:flex;gap:10px;align-items:center}
+.mode-badge{padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--text2)}
+.main-content{flex:1;padding:24px 28px;max-width:960px}
+.tab-content{display:none}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .card-header h2{font-size:1rem;font-weight:600}
 .card-body{padding:20px}
-.timeline{position:relative;padding:8px 0}
-.timeline::before{content:'';position:absolute;left:104px;top:16px;bottom:16px;width:2px;background:var(--border);border-radius:1px}
-.timeline-item{display:flex;align-items:stretch;min-height:60px;position:relative}
-.timeline-time{width:92px;padding:8px 12px 8px 0;text-align:right;font-size:.75rem;color:var(--text2);flex-shrink:0;padding-top:18px;line-height:1.3}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .2s;box-shadow:var(--shadow)}
+.stat-card:hover{box-shadow:var(--shadow-lg)}
+.stat-card .label{font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:4px}
+.stat-card .value{font-size:1.75rem;font-weight:700;color:var(--text)}
+.stat-card .sub{font-size:.75rem;color:var(--text2);margin-top:4px}
+.progress-bar{width:100%;height:10px;background:var(--border);border-radius:5px;overflow:hidden;margin-top:10px}
+.progress-fill{height:100%;border-radius:5px;background:var(--primary);transition:width .5s ease;min-width:0}
+.cat-bars{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.cat-bar-row{display:flex;align-items:center;gap:10px;font-size:.8rem}
+.cat-bar-row .bar-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cat-bar-row .bar-name{color:var(--text2);min-width:80px;flex-shrink:0}
+.cat-bar-row .bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.cat-bar-row .bar-fill{height:100%;border-radius:4px;transition:width .4s ease}
+.cat-bar-row .bar-count{font-weight:600;min-width:24px;text-align:right;color:var(--text)}
+.timeline{padding:4px 0;position:relative}
+.timeline-item{display:flex;align-items:stretch;min-height:48px;position:relative}
+.timeline-time{width:72px;padding:6px 10px 6px 0;text-align:right;font-size:.75rem;color:var(--text2);flex-shrink:0;padding-top:14px;line-height:1.3}
 .timeline-time .time-main{font-size:.85rem;font-weight:600;color:var(--text)}
-.timeline-connector{width:24px;flex-shrink:0;display:flex;align-items:flex-start;justify-content:center;padding-top:16px;position:relative}
-.timeline-dot{width:12px;height:12px;border-radius:50%;background:var(--primary);border:2px solid var(--surface);z-index:2;flex-shrink:0;transition:all .2s}
+.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:16px;margin-right:14px;transition:all .2s}
 .timeline-item.done .timeline-dot{background:var(--accent)}
-.timeline-card{flex:1;margin:8px 0 8px 0;padding:12px 16px;border-radius:10px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;min-height:48px}
-.timeline-card:hover{border-color:var(--primary);transform:translateX(4px);box-shadow:var(--shadow)}
-.timeline-card .card-color-bar{width:4px;border-radius:2px;flex-shrink:0;align-self:stretch}
+.timeline-card{flex:1;margin:5px 0;padding:10px 14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;min-height:40px;border-left:3px solid var(--primary);box-shadow:var(--shadow)}
+.timeline-card:hover{box-shadow:var(--shadow-lg)}
 .timeline-card .card-body{flex:1;min-width:0;padding:0}
-.timeline-card .card-title{font-size:.875rem;font-weight:600;color:var(--text)}
-.timeline-card .card-category{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.timeline-card .card-actions{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:opacity .2s}
-.timeline-card:hover .card-actions{opacity:1}
-.timeline-item.done .timeline-card{opacity:.55}
-.timeline-item.done .card-title{text-decoration:line-through;color:var(--text2)}
-.timeline-item.done .timeline-card:hover{opacity:.75}
+.timeline-card .card-title{font-size:.875rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.timeline-card .card-category{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.timeline-card .card-actions{display:flex;gap:4px;flex-shrink:0}
 .timeline-card .card-btn{width:28px;height:28px;border-radius:6px;border:none;background:transparent;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .15s}
 .timeline-card .card-btn:hover{background:var(--surface2);color:var(--text)}
 .timeline-card .card-btn.done-btn:hover{color:var(--accent)}
 .timeline-card .card-btn.edit-btn:hover{color:var(--primary)}
-.empty-state{text-align:center;padding:40px 20px;color:var(--text2)}
-.empty-state p{font-size:.9rem;margin-top:8px}
+.timeline-item.done .timeline-card{border-left-color:var(--accent);opacity:.6}
+.timeline-item.done .card-title{text-decoration:line-through;color:var(--text2)}
+.timeline-item.done .timeline-card:hover{opacity:.8}
+.priority-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;display:inline-block}
+.priority-dot.high{background:#ef4444}
+.priority-dot.medium{background:#f59e0b}
+.priority-dot.low{background:#22c55e}
+.notes-icon{opacity:.4;font-size:.75rem;cursor:default}
+.repeat-label{font-size:.65rem;padding:2px 6px;border-radius:4px;background:var(--surface2);color:var(--text2);white-space:nowrap}
+.drag-handle{cursor:grab;opacity:.3;font-size:.8rem;color:var(--text2);padding:0 2px;transition:opacity .15s;flex-shrink:0;user-select:none}
+.timeline-card:hover .drag-handle{opacity:.7}
+.timeline-card.dragging{opacity:.4;border-style:dashed}
+.view-switcher{display:flex;gap:2px;padding:3px;background:var(--surface);border-radius:6px;border:1px solid var(--border)}
+.view-switcher .view-btn{padding:5px 12px;border-radius:4px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.75rem;font-weight:500;transition:all .15s}
+.view-switcher .view-btn.active{background:var(--primary);color:#fff}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.week-col{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.week-col-header{padding:8px;text-align:center;font-size:.75rem;font-weight:600;border-bottom:1px solid var(--border);background:var(--surface)}
+.week-col.today .week-col-header{background:var(--primary);color:#fff}
+.week-col-body{padding:6px;min-height:100px}
+.week-task{padding:3px 6px;margin-bottom:3px;border-radius:3px;font-size:.7rem;font-weight:500;color:#fff;cursor:pointer;transition:all .15s;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.week-task:hover{opacity:.85}
+.week-task.done{opacity:.4;text-decoration:line-through}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.month-header{padding:6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text2)}
+.month-cell{aspect-ratio:1;padding:4px;border-radius:6px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .1s;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:6px;font-size:.8rem;min-height:56px}
+.month-cell:hover{border-color:var(--primary)}
+.month-cell.today{background:var(--primary);color:#fff;font-weight:700}
+.month-cell.other{opacity:.3}
+.month-cell .dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px;justify-content:center}
+.month-cell .task-dot{width:5px;height:5px;border-radius:50%}
+.month-cell .more-dots{font-size:.55rem;color:var(--text2)}
 .task-list{display:flex;flex-direction:column;gap:8px}
-.task-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border-radius:8px;border:1px solid var(--border);transition:all .2s}
-.task-item:hover{border-color:var(--primary)}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);transition:all .2s}
+.task-item:hover{border-color:var(--primary);box-shadow:var(--shadow)}
 .task-item .color-dot{width:4px;height:36px;border-radius:2px;flex-shrink:0}
 .task-item .task-info{flex:1;min-width:0}
-.task-item .task-title{font-size:.875rem;font-weight:500}
-.task-item .task-meta{font-size:.75rem;color:var(--text2);display:flex;gap:12px;margin-top:2px}
+.task-item .task-title{font-size:.875rem;font-weight:500;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.task-item .task-meta{font-size:.75rem;color:var(--text2);display:flex;gap:10px;margin-top:2px;flex-wrap:wrap}
 .task-item .task-actions{display:flex;gap:6px;flex-shrink:0}
 .task-item.done .task-title{text-decoration:line-through;color:var(--text2)}
 .checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:transparent}
 .checkbox:hover{border-color:var(--primary)}
 .checkbox.checked{background:var(--primary);border-color:var(--primary)}
-.checkbox.checked::after{content:'\2713';color:#fff;font-size:14px;font-weight:700}
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center}
+.checkbox.checked::after{content:'\2713';color:#fff;font-size:14px;font-weight:700;animation:checkPop .2s ease}
+@keyframes checkPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;animation:fadeIn .15s ease}
 .modal-overlay.active{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;width:90%;max-width:480px;max-height:90vh;overflow-y:auto}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;width:90%;max-width:520px;max-height:90vh;overflow-y:auto;animation:scaleIn .2s ease;box-shadow:var(--shadow-lg)}
+@keyframes scaleIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
 .modal h3{font-size:1.1rem;margin-bottom:20px}
 .form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:.8rem;font-weight:500;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-.form-group input,.form-group select{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;transition:border .2s}
-.form-group input:focus,.form-group select:focus{border-color:var(--primary)}
+.form-group label{display:block;font-size:.75rem;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.form-group input,.form-group select{width:100%;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;transition:border .2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.15)}
 .form-group input[type=color]{height:44px;padding:4px;cursor:pointer}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}
-.cat-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+textarea.form-input{width:100%;padding:10px 14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;resize:vertical;font-family:inherit;transition:border .2s}
+textarea.form-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.15)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--radius);border:none;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:#4338ca;box-shadow:var(--shadow)}
+.btn-danger{background:#ef4444;color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-sm{padding:6px 12px;font-size:.75rem}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface2);color:var(--text)}
+.btn-icon{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.cat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .cat-chip{padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:500;cursor:pointer;border:1px solid transparent;transition:all .2s;color:#fff}
-.cat-chip.active{border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.2)}
-.toast{position:fixed;bottom:30px;right:30px;padding:14px 24px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:.875rem;z-index:200;transform:translateY(120px);opacity:0;transition:all .4s;max-width:360px}
-.toast.show{transform:translateY(0);opacity:1}
-.toast.success{border-color:var(--accent)}
-.toast.error{border-color:#ef4444}
-.wallpaper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px}
-.wallpaper-opt{width:100%;aspect-ratio:16/9;border-radius:8px;border:2px solid var(--border);cursor:pointer;transition:all .2s;overflow:hidden}
-.wallpaper-opt:hover{border-color:var(--primary)}
-.wallpaper-opt.active{border-color:var(--primary);box-shadow:0 0 16px rgba(99,102,241,.4)}
-.wallpaper-opt img{width:100%;height:100%;object-fit:cover}
-.wallpaper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;transition:opacity .8s}
-.gradient-1{background:linear-gradient(135deg,#0f0f1a 0%,#1a1a3e 50%,#0f0f1a 100%)}
-.gradient-2{background:linear-gradient(135deg,#0a0a1a 0%,#1a0a2e 30%,#2d1b3d 70%,#0a0a1a 100%)}
-.gradient-3{background:linear-gradient(135deg,#0a1628 0%,#0f2a3e 40%,#1a3a2e 70%,#0a1628 100%)}
-.gradient-4{background:linear-gradient(135deg,#1a0a0a 0%,#3e1a1a 40%,#2e2a1a 70%,#1a0a0a 100%)}
-.gradient-5{background:linear-gradient(135deg,#0f0f1a 0%,#1a2e1a 40%,#0f1a2e 70%,#0f0f1a 100%)}
-.gradient-6{background:linear-gradient(135deg,#1a1a2e 0%,#2e1a3e 40%,#1a2e3e 70%,#1a1a2e 100%)}
-:root.light .gradient-1{background:linear-gradient(135deg,#e8e8f2 0%,#d0d0ea 50%,#e8e8f2 100%)}
-:root.light .gradient-2{background:linear-gradient(135deg,#e8e0f0 0%,#d8c8ec 30%,#e8d8f0 70%,#e8e0f0 100%)}
-:root.light .gradient-3{background:linear-gradient(135deg,#e0e8f0 0%,#c8dce8 40%,#d0e8e0 70%,#e0e8f0 100%)}
-:root.light .gradient-4{background:linear-gradient(135deg,#f0e0e0 0%,#f0d0d0 40%,#f0ece0 70%,#f0e0e0 100%)}
-:root.light .gradient-5{background:linear-gradient(135deg,#e8f0e8 0%,#d8f0d8 40%,#d8e0f0 70%,#e8f0e8 100%)}
-:root.light .gradient-6{background:linear-gradient(135deg,#e8e8f0 0%,#f0e0f8 40%,#e0e8f8 70%,#e8e8f0 100%)}
-.tabs{display:flex;gap:2px;padding:4px;background:var(--surface);border-radius:10px;border:1px solid var(--border);margin-bottom:20px}
-.tab{padding:8px 16px;border-radius:7px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.8rem;font-weight:500;transition:all .2s}
-.tab.active{background:var(--primary);color:#fff}
-.tab:hover:not(.active){color:var(--text)}
-.category-pie{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.cat-stat{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:8px;background:var(--surface);font-size:.8rem}
+.cat-chip.active{border-color:#fff;box-shadow:0 0 10px rgba(255,255,255,.15)}
+.cat-stat{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:var(--radius);background:var(--surface);font-size:.8rem}
 .cat-stat .dot{width:10px;height:10px;border-radius:50%}
 .cat-stat .count{font-weight:600;color:var(--text)}
 .cat-stat .name{color:var(--text2)}
+.confirm-msg{color:var(--text2);font-size:.9rem;margin-bottom:24px;line-height:1.5}
+.modal-overlay.z-higher{z-index:150}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text2)}
+.empty-state p{font-size:.9rem;margin-top:8px}
 .loading{text-align:center;padding:40px;color:var(--text2)}
 .loading::after{content:'...';animation:dots 1.5s infinite}
 @keyframes dots{0%,20%{content:'.'}40%{content:'..'}60%,100%{content:'...'}}
-.progress-bar{width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-top:8px}
-.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s ease}
-.date-nav{display:flex;align-items:center;gap:6px}
-.date-nav button{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s}
-.date-nav button:hover{background:var(--surface);border-color:var(--primary)}
-.date-nav .date-label{font-size:.8rem;font-weight:500;color:var(--text);min-width:140px;text-align:center;cursor:pointer;padding:4px 8px;border-radius:6px}
-.date-nav .date-label:hover{background:var(--card)}
-.date-nav input[type=date]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
-.search-input{width:100%;padding:10px 14px 10px 36px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;transition:border .2s}
+.toast{position:fixed;top:20px;right:20px;padding:12px 20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--border);color:var(--text);font-size:.85rem;z-index:200;transform:translateY(-20px);opacity:0;transition:all .3s ease;max-width:360px;box-shadow:var(--shadow-lg)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:var(--accent)}
+.toast.error{border-color:#ef4444}
+.search-input{width:100%;padding:10px 14px 10px 36px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;transition:border .2s}
 .search-input:focus{border-color:var(--primary)}
 .search-wrap{position:relative;margin-bottom:12px}
 .search-wrap .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2);font-size:.85rem}
-.confirm-msg{color:var(--text2);font-size:.9rem;margin-bottom:24px;line-height:1.5}
-.modal-overlay.z-higher{z-index:150}
-:root.light .task-item .task-meta{color:#8b8fa8}
-:root.light .cat-chip.active{border-color:rgba(79,70,229,.3);box-shadow:0 0 16px rgba(79,70,229,.15)}
-:root.light .stat-card:hover{box-shadow:0 4px 24px rgba(0,0,0,.08)}
-:root.light .modal{box-shadow:0 8px 40px rgba(0,0,0,.12)}
-:root.light .toast{box-shadow:0 4px 24px rgba(0,0,0,.1)}
-:root.light .form-group input:focus,.form-group select:focus{box-shadow:0 0 0 3px rgba(79,70,229,.12)}
-:root.light .btn-ghost:hover{background:var(--surface2)}
-:root.light header{backdrop-filter:blur(12px)}
-:root.light .checkbox{border-color:#c8cad8}
-:root.light .checkbox:hover{border-color:var(--primary)}
+.wallpaper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.wallpaper-opt{width:100%;aspect-ratio:16/9;border-radius:var(--radius);border:2px solid var(--border);cursor:pointer;transition:all .2s;overflow:hidden}
+.wallpaper-opt:hover{border-color:var(--primary)}
+.wallpaper-opt.active{border-color:var(--primary);box-shadow:0 0 12px rgba(79,70,229,.3)}
+.wallpaper-opt img{width:100%;height:100%;object-fit:cover}
+.wallpaper{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;transition:opacity .8s}
+.gradient-1{background:linear-gradient(135deg,#0a0a0f,#1a1a3e,#0a0a0f)}
+.gradient-2{background:linear-gradient(135deg,#0a0a0f,#1a0a2e,#2d1b3d,#0a0a0f)}
+.gradient-3{background:linear-gradient(135deg,#0a0a0f,#0f2a3e,#1a3a2e,#0a0a0f)}
+.gradient-4{background:linear-gradient(135deg,#0a0a0f,#3e1a1a,#2e2a1a,#0a0a0f)}
+.gradient-5{background:linear-gradient(135deg,#0a0a0f,#1a2e1a,#0f1a2e,#0a0a0f)}
+.gradient-6{background:linear-gradient(135deg,#0a0a0f,#2e1a3e,#1a2e3e,#0a0a0f)}
+:root.light .gradient-1{background:linear-gradient(135deg,#f0f0f8,#d0d0ea,#f0f0f8)}
+:root.light .gradient-2{background:linear-gradient(135deg,#f0f0f8,#d8c8ec,#e8d8f0,#f0f0f8)}
+:root.light .gradient-3{background:linear-gradient(135deg,#f0f0f8,#c8dce8,#d0e8e0,#f0f0f8)}
+:root.light .gradient-4{background:linear-gradient(135deg,#f0f0f8,#f0d0d0,#f0ece0,#f0f0f8)}
+:root.light .gradient-5{background:linear-gradient(135deg,#f0f0f8,#d8f0d8,#d8e0f0,#f0f0f8)}
+:root.light .gradient-6{background:linear-gradient(135deg,#f0f0f8,#f0e0f8,#e0e8f8,#f0f0f8)}
+:root.light .cat-chip.active{border-color:rgba(79,70,229,.3);box-shadow:0 0 12px rgba(79,70,229,.12)}
+:root.light .modal-overlay{background:rgba(0,0,0,.2)}
 :root.light .date-nav button{background:var(--surface);border-color:#d8dae6}
 :root.light .date-nav button:hover{background:var(--surface2);border-color:var(--primary)}
 :root.light .search-input{background:var(--surface);border-color:#d8dae6}
-:root.light .search-input:focus{box-shadow:0 0 0 3px rgba(79,70,229,.12)}
-:root.light .cat-chip.active{border-color:rgba(79,70,229,.4);box-shadow:0 0 12px rgba(79,70,229,.15)}
-:root.light .wallpaper-opt.active{border-color:var(--primary);box-shadow:0 0 16px rgba(79,70,229,.2)}
-:root.light .modal-overlay{background:rgba(0,0,0,.25)}
-.view-switcher{display:flex;gap:2px;padding:3px;background:var(--surface);border-radius:8px;border:1px solid var(--border)}
-.view-switcher .view-btn{padding:5px 12px;border-radius:5px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.7rem;font-weight:500;transition:all .15s}
-.view-switcher .view-btn.active{background:var(--primary);color:#fff}
-.view-switcher .view-btn:hover:not(.active){color:var(--text)}
-.priority-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
-.priority-high{background:#fef2f2;color:#dc2626}
-.priority-medium{background:#fffbeb;color:#d97706}
-.priority-low{background:#f0fdf4;color:#16a34a}
-:root.light .priority-high{background:#fef2f2}
-:root.light .priority-medium{background:#fffbeb}
-:root.light .priority-low{background:#f0fdf4}
-textArea.form-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;resize:vertical;font-family:inherit;transition:border .2s}
-textArea.form-input:focus{border-color:var(--primary)}
-.notes-icon{margin-left:6px;opacity:.5;font-size:.7rem;cursor:default}
-.repeat-label{font-size:.6rem;padding:2px 8px;border-radius:8px;background:var(--surface2);color:var(--text2);display:inline-flex;align-items:center;gap:3px;margin-left:6px}
-.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:12px}
-.week-col{border:1px solid var(--border);border-radius:8px;overflow:hidden}
-.week-col-header{padding:8px;text-align:center;font-size:.75rem;font-weight:600;border-bottom:1px solid var(--border);background:var(--surface)}
-.week-col.today .week-col-header{background:var(--primary);color:#fff}
-.week-col-body{padding:6px;min-height:120px}
-.week-task{padding:4px 8px;margin-bottom:4px;border-radius:4px;font-size:.7rem;font-weight:500;color:#fff;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px}
-.week-task:hover{transform:translateX(2px)}
-.week-task.done{opacity:.45;text-decoration:line-through}
-.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.month-header{padding:6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text2)}
-.month-cell{aspect-ratio:1;padding:4px;border-radius:6px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .1s;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:6px;font-size:.75rem;min-height:60px}
-.month-cell:hover{border-color:var(--primary)}
-.month-cell.today{background:var(--primary);color:#fff;font-weight:700}
-.month-cell.other{opacity:.3}
-.month-cell .dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:4px;justify-content:center}
-.month-cell .task-dot{width:5px;height:5px;border-radius:50%}
-.month-cell .more-dots{font-size:.55rem;color:var(--text2)}
-.drag-handle{cursor:grab;opacity:0;transition:opacity .15s;font-size:.8rem;color:var(--text2);padding:0 4px}
-.timeline-card:hover .drag-handle{opacity:.5}
-.timeline-card.dragging{opacity:.4;border-style:dashed}
-@media(max-width:600px){header{flex-direction:column;gap:12px;text-align:center}.stats-grid{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.timeline::before{left:50px}.timeline-time{width:38px;padding-right:6px;font-size:.65rem}.timeline-time .time-main{font-size:.7rem}.timeline-connector{width:16px}.timeline-card{margin:6px 0;padding:10px 12px;font-size:.8rem}.week-grid{grid-template-columns:repeat(7,1fr);gap:4px;overflow-x:auto}.week-col{min-width:100px}.month-cell{min-height:40px;font-size:.65rem}}
+:root.light .btn-ghost:hover{background:var(--surface2)}
+@media(max-width:768px){
+.sidebar{width:60px;padding:16px 8px}
+.sidebar .app-title span,.sidebar .tab span,.sidebar .theme-btn span{display:none}
+.sidebar .tab,.sidebar .theme-btn{justify-content:center;padding:10px}
+.sidebar .tab svg,.sidebar .theme-btn svg{width:20px;height:20px}
+.main-content{padding:16px}
+.stats-grid{grid-template-columns:1fr 1fr}
+.form-row{grid-template-columns:1fr}
+.timeline-time{width:60px;font-size:.7rem}
+.timeline-dot{margin-right:10px}
+.week-grid{overflow-x:auto}
+.week-col{min-width:120px}
+.month-cell{min-height:40px;font-size:.7rem}
+.topbar .date-nav .date-label{min-width:100px;font-size:.8rem}
+}
+@media(max-width:480px){
+.sidebar{width:48px;padding:12px 4px}
+.sidebar .tab{padding:8px}
+.main-content{padding:12px}
+.stats-grid{grid-template-columns:1fr}
+.topbar{flex-direction:column;gap:8px;padding:12px}
+.topbar .date-nav{flex-wrap:wrap;justify-content:center}
+}
 </style>
 </head>
 <body>
 <div class="wallpaper gradient-1" id="wallpaper"></div>
-<div class="app">
-  <header>
-    <h1><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span>Syllabus Tracker</span></h1>
-    <div class="header-actions">
+<div class="app-layout">
+  <div class="sidebar">
+    <div class="app-title">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Tracker</span>
+    </div>
+    <button class="tab active" data-tab="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span>Dashboard</span></button>
+    <button class="tab" data-tab="schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Schedule</span></button>
+    <button class="tab" data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Tasks</span></button>
+    <button class="tab" data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Settings</span></button>
+    <div class="bottom">
+      <button class="theme-btn" id="themeToggle" onclick="toggleTheme()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span id="themeLabel">Dark</span></button>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="topbar">
       <div class="date-nav">
         <button onclick="shiftDay(-1)" title="Previous day">&#9664;</button>
         <span class="date-label" onclick="document.getElementById('datePicker').showPicker?document.getElementById('datePicker').showPicker():document.getElementById('datePicker').focus()" id="dateLabel">Today</span>
         <input type="date" id="datePicker" onchange="goToDate(this.value)">
         <button onclick="shiftDay(1)" title="Next day">&#9654;</button>
-        <button onclick="goToToday()" title="Today" style="width:auto;padding:0 10px;font-size:.65rem">Today</button>
+        <button class="btn btn-sm btn-ghost" onclick="goToToday()" style="font-size:.7rem">Today</button>
       </div>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">&#9790;</button>
-      <span class="mode-badge" id="modeBadge">Live</span>
-    </div>
-  </header>
-
-  <div class="tabs" id="tabBar">
-    <button class="tab active" data-tab="dashboard">Dashboard</button>
-    <button class="tab" data-tab="schedule">Schedule</button>
-    <button class="tab" data-tab="tasks">Tasks</button>
-    <button class="tab" data-tab="settings">Settings</button>
-  </div>
-
-  <div id="tabDashboard" class="tab-content">
-    <div class="stats-grid" id="statsGrid">
-      <div class="stat-card"><div class="label">Total Tasks</div><div class="value" id="statTotal">0</div></div>
-      <div class="stat-card"><div class="label">Done</div><div class="value" id="statDone">0</div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="sub" id="progressLabel">0% today</div></div>
-      <div class="stat-card"><div class="label">Best Streak</div><div class="value" id="statStreak">0</div><div class="sub">consecutive days</div></div>
-      <div class="stat-card"><div class="label">Hours Scheduled</div><div class="value" id="statHours">0</div><div class="sub" id="statHoursDate">today</div></div>
-      <div class="stat-card"><div class="label">Categories</div><div class="value" id="statCats">0</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><h2>Categories Breakdown</h2></div>
-      <div class="card-body"><div class="category-pie" id="categoryBreakdown"></div></div>
-    </div>
-  </div>
-
-  <div id="tabSchedule" class="tab-content" style="display:none">
-    <div class="card">
-      <div class="card-header"><h2 id="scheduleTitle">Schedule</h2><div style="display:flex;gap:8px;align-items:center"><div class="view-switcher" id="viewSwitcher"><button class="view-btn active" data-view="day" onclick="setViewMode('day')">Day</button><button class="view-btn" data-view="week" onclick="setViewMode('week')">Week</button><button class="view-btn" data-view="month" onclick="setViewMode('month')">Month</button></div><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div></div>
-      <div class="card-body schedule" id="scheduleGrid"></div>
-    </div>
-  </div>
-
-  <div id="tabTasks" class="tab-content" style="display:none">
-    <div class="card">
-      <div class="card-header"><h2>All Tasks</h2><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div>
-      <div class="card-body">
-        <div class="search-wrap"><span class="search-icon">&#128269;</span><input type="text" class="search-input" id="taskSearch" placeholder="Search tasks..." oninput="renderTasks()"></div>
-        <div class="cat-chips" id="filterChips"></div>
-        <div style="margin-top:16px"><div class="task-list" id="taskList"></div></div>
+      <div class="header-actions">
+        <span class="mode-badge" id="modeBadge">Live</span>
       </div>
     </div>
-  </div>
-
-  <div id="tabSettings" class="tab-content" style="display:none">
-    <div class="card">
-      <div class="card-header"><h2>Wallpaper</h2></div>
-      <div class="card-body">
-        <div class="wallpaper-grid" id="wallpaperGrid"></div>
-        <div class="form-group" style="margin-top:16px">
-          <label>Custom Wallpaper URL</label>
-          <input type="text" id="customWallpaperInput" placeholder="https://example.com/image.jpg" onchange="setCustomWallpaper(this.value)">
+    <div id="tabDashboard" class="tab-content">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="label">Total Tasks</div><div class="value" id="statTotal">0</div></div>
+        <div class="stat-card"><div class="label">Done Today</div><div class="value" id="statDone">0</div><div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div><div class="sub" id="progressLabel">0%</div></div>
+        <div class="stat-card"><div class="label">Best Streak</div><div class="value" id="statStreak">0</div><div class="sub">consecutive days</div></div>
+        <div class="stat-card"><div class="label">Hours Scheduled</div><div class="value" id="statHours">0</div><div class="sub" id="statHoursDate">today</div></div>
+        <div class="stat-card"><div class="label">Categories</div><div class="value" id="statCats">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Categories Breakdown</h2></div>
+        <div class="card-body"><div class="cat-bars" id="categoryBreakdown"></div></div>
+      </div>
+    </div>
+    <div id="tabSchedule" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-header"><h2 id="scheduleTitle">Schedule</h2><div style="display:flex;gap:8px;align-items:center"><div class="view-switcher" id="viewSwitcher"><button class="view-btn active" data-view="day" onclick="setViewMode('day')">Day</button><button class="view-btn" data-view="week" onclick="setViewMode('week')">Week</button><button class="view-btn" data-view="month" onclick="setViewMode('month')">Month</button></div><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div></div>
+        <div class="card-body" id="scheduleGrid"></div>
+      </div>
+    </div>
+    <div id="tabTasks" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-header"><h2>All Tasks</h2><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div>
+        <div class="card-body">
+          <div class="search-wrap"><span class="search-icon">&#128269;</span><input type="text" class="search-input" id="taskSearch" placeholder="Search tasks..." oninput="renderTasks()"></div>
+          <div class="cat-chips" id="filterChips"></div>
+          <div style="margin-top:16px"><div class="task-list" id="taskList"></div></div>
         </div>
       </div>
     </div>
-    <div class="card">
-      <div class="card-header"><h2>Categories & Colors</h2></div>
-      <div class="card-body"><div id="categorySettings"></div></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><h2>Data</h2></div>
-      <div class="card-body">
-        <p style="font-size:.8rem;color:var(--text2);margin-bottom:16px">Export your tasks as a JSON backup file, or import previously exported data.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="exportData()">&#8595; Export JSON</button>
-          <button class="btn btn-ghost" onclick="document.getElementById('importInput').click()">&#8593; Import JSON</button>
-          <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+    <div id="tabSettings" class="tab-content" style="display:none">
+      <div class="card">
+        <div class="card-header"><h2>Wallpaper</h2></div>
+        <div class="card-body">
+          <div class="wallpaper-grid" id="wallpaperGrid"></div>
+          <div class="form-group" style="margin-top:16px">
+            <label>Custom Wallpaper URL</label>
+            <input type="text" id="customWallpaperInput" placeholder="https://example.com/image.jpg" onchange="setCustomWallpaper(this.value)">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Categories & Colors</h2></div>
+        <div class="card-body"><div id="categorySettings"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2>Data</h2></div>
+        <div class="card-body">
+          <p style="font-size:.8rem;color:var(--text2);margin-bottom:16px">Export your tasks as a JSON backup file, or import previously exported data.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="exportData()">&#8595; Export JSON</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('importInput').click()">&#8593; Import JSON</button>
+            <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="modal-overlay" id="taskModal">
   <div class="modal">
     <h3 id="modalTitle">Add Task</h3>
@@ -341,7 +358,6 @@ textArea.form-input:focus{border-color:var(--primary)}
     </div>
   </div>
 </div>
-
 <div class="modal-overlay z-higher" id="confirmModal">
   <div class="modal" style="max-width:380px">
     <h3 id="confirmTitle">Confirm</h3>
@@ -352,19 +368,15 @@ textArea.form-input:focus{border-color:var(--primary)}
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
 const API_BASE = '';
 let state = { tasks: [], categories: {}, colors: {}, wallpaper: 'gradient_1', customWallpaper: null, theme: 'dark', today: '', viewDate: '', viewMode: 'day' };
 let isOnline = true;
 let filterCategory = null;
 let confirmResolver = null;
-
 function getApi(path, opts) { return fetch(API_BASE + path, opts).then(r => r.ok ? r.json() : Promise.reject(r.status)); }
 function isFlaskMode() { return window.location.port === '5050' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'; }
-
 async function loadData() {
   if (isFlaskMode()) {
     try {
@@ -384,7 +396,6 @@ async function loadData() {
   }
   loadLocal();
 }
-
 function loadLocal() {
   document.getElementById('modeBadge').textContent = 'Offline';
   document.getElementById('modeBadge').style.borderColor = '#f59e0b';
@@ -408,7 +419,6 @@ function loadLocal() {
   state.viewDate = state.today;
   saveLocal();
 }
-
 function saveLocal() {
   if (!isOnline) {
     localStorage.setItem('syllabus_data', JSON.stringify({
@@ -417,13 +427,11 @@ function saveLocal() {
     }));
   }
 }
-
 function applyTheme(theme) {
   state.theme = theme;
   document.documentElement.classList.toggle('light', theme === 'light');
-  document.getElementById('themeToggle').innerHTML = theme === 'light' ? '&#9790;' : '&#9789;';
+  document.getElementById('themeLabel').textContent = theme === 'light' ? 'Light' : 'Dark';
 }
-
 function toggleTheme() {
   const newTheme = state.theme === 'dark' ? 'light' : 'dark';
   applyTheme(newTheme);
@@ -433,10 +441,8 @@ function toggleTheme() {
   }
   showToast(newTheme === 'light' ? 'Light mode' : 'Dark mode', 'success');
 }
-
 function fmtDate(d) { return d.toISOString().split('T')[0]; }
 function parseDate(str) { const p = str.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
-
 function updateDateNav() {
   const d = parseDate(state.viewDate);
   const todayStr = state.today;
@@ -446,22 +452,18 @@ function updateDateNav() {
   document.getElementById('datePicker').value = state.viewDate;
   document.getElementById('scheduleTitle').textContent = label + ' Schedule';
 }
-
 function shiftDay(delta) {
   const d = parseDate(state.viewDate);
   d.setDate(d.getDate() + delta);
   state.viewDate = fmtDate(d);
   updateDateNav(); refreshAll();
 }
-
 function goToDate(dateStr) {
   if (dateStr) { state.viewDate = dateStr; state.viewMode = 'day'; updateDateNav(); setViewMode('day'); }
 }
-
 function goToToday() {
   state.viewDate = state.today; updateDateNav(); refreshAll();
 }
-
 function showConfirm(msg, btnText) {
   return new Promise(resolve => {
     document.getElementById('confirmMsg').textContent = msg;
@@ -476,14 +478,11 @@ function closeConfirm(val) {
 }
 document.getElementById('confirmBtn').addEventListener('click', () => closeConfirm(true));
 document.getElementById('confirmModal').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeConfirm(false); });
-
 function showToast(msg, type) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.className = 'toast ' + (type||'') + ' show';
   clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove('show'), 3000);
 }
-
-// Tabs
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -496,8 +495,6 @@ document.querySelectorAll('.tab').forEach(tab => {
     if (tab.dataset.tab === 'settings') renderSettings();
   });
 });
-
-// API calls
 async function apiGetTasks() {
   if (isOnline && isFlaskMode()) {
     const data = await getApi('/api/tasks');
@@ -506,7 +503,6 @@ async function apiGetTasks() {
   }
   loadLocal();
 }
-
 async function apiAddTask(task) {
   if (isOnline && isFlaskMode()) {
     const data = await getApi('/api/tasks', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(task) });
@@ -518,7 +514,6 @@ async function apiAddTask(task) {
   state.tasks.push(task); saveLocal();
   return task;
 }
-
 async function apiUpdateTask(id, updates) {
   if (isOnline && isFlaskMode()) {
     const data = await getApi('/api/tasks/' + id, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(updates) });
@@ -528,7 +523,6 @@ async function apiUpdateTask(id, updates) {
   const t = state.tasks.find(t => t.id === id);
   if (t) Object.assign(t, updates); saveLocal();
 }
-
 async function apiDeleteTask(id) {
   if (isOnline && isFlaskMode()) {
     await getApi('/api/tasks/' + id, { method:'DELETE' });
@@ -537,7 +531,6 @@ async function apiDeleteTask(id) {
   }
   state.tasks = state.tasks.filter(t => t.id !== id); saveLocal();
 }
-
 async function apiToggleTask(id, date) {
   if (isOnline && isFlaskMode()) {
     const data = await getApi('/api/tasks/' + id + '/toggle', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({date:date||state.today}) });
@@ -553,7 +546,6 @@ async function apiToggleTask(id, date) {
   saveLocal();
   return t.done_dates.includes(d);
 }
-
 async function apiGetStats() {
   if (isOnline && isFlaskMode()) {
     return getApi('/api/stats');
@@ -576,8 +568,6 @@ async function apiGetStats() {
     categories: tasks.reduce((a,t) => { a[t.category] = (a[t.category]||0)+1; return a; }, {})
   };
 }
-
-// Rendering
 function renderDashboard() {
   apiGetStats().then(stats => {
     document.getElementById('statTotal').textContent = stats.total;
@@ -599,13 +589,14 @@ function renderDashboard() {
     document.getElementById('statHours').textContent = hrs + 'h' + (mins > 0 ? ' ' + mins + 'm' : '');
     const d = parseDate(vd);
     document.getElementById('statHoursDate').textContent = vd === state.today ? 'today' : d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+    const cats = stats.categories;
+    const maxCount = Math.max(1, ...Object.values(cats));
     const bd = document.getElementById('categoryBreakdown');
-    bd.innerHTML = Object.entries(stats.categories).map(([cat,count]) =>
-      `<div class="cat-stat"><span class="dot" style="background:${state.colors[cat]||'#64748b'}"></span><span class="name">${cat}</span><span class="count">${count}</span></div>`
+    bd.innerHTML = Object.entries(cats).map(([cat,count]) =>
+      `<div class="cat-bar-row"><span class="bar-dot" style="background:${state.colors[cat]||'#64748b'}"></span><span class="bar-name">${cat}</span><div class="bar-track"><div class="bar-fill" style="width:${count/maxCount*100}%;background:${state.colors[cat]||'#64748b'}"></div></div><span class="bar-count">${count}</span></div>`
     ).join('');
   });
 }
-
 function renderSchedule() {
   const grid = document.getElementById('scheduleGrid');
   const viewMode = state.viewMode || 'day';
@@ -624,15 +615,13 @@ function renderSchedule() {
     const startMin = sh * 60 + sm;
     if (viewDate === state.today && !scrollId && startMin >= currentMin) scrollId = 'timelineTask' + t.id;
     const pri = t.priority || 'medium';
-    const priClass = 'priority-' + pri;
     html += `<div class="timeline-item${done?' done':''}" id="timelineTask${t.id}">
       <div class="timeline-time"><div class="time-main">${t.start}</div>${t.end ? '<div>'+t.end+'</div>' : ''}</div>
-      <div class="timeline-connector"><div class="timeline-dot"></div></div>
-      <div class="timeline-card" draggable="true" ondragstart="onDragStart(event,${t.id})" ondragover="onDragOver(event)" ondrop="onDrop(event,${t.id})" onclick="toggleTask(${t.id})" title="Click to toggle done">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card" draggable="true" ondragstart="onDragStart(event,${t.id})" ondragover="onDragOver(event)" ondrop="onDrop(event,${t.id})" onclick="toggleTask(${t.id})" title="Click to toggle done" style="border-left-color:${t.color}">
         <span class="drag-handle">&#9776;</span>
-        <div class="card-color-bar" style="background:${t.color}"></div>
         <div class="card-body">
-          <div class="card-title">${t.title}<span class="priority-badge ${priClass}">${pri}</span>${t.notes ? '<span class="notes-icon" title="'+escHtml(t.notes)+'">&#128221;</span>' : ''}${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260; '+t.repeat+'</span>' : ''}</div>
+          <div class="card-title">${t.title}<span class="priority-dot ${pri}"></span>${t.notes ? '<span class="notes-icon" title="'+escHtml(t.notes)+'">&#128221;</span>' : ''}${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260; '+t.repeat+'</span>' : ''}</div>
           <div class="card-category">${t.category || 'Uncategorized'}</div>
         </div>
         <div class="card-actions">
@@ -651,7 +640,6 @@ function renderSchedule() {
     }, 100);
   }
 }
-
 function renderTasks() {
   const list = document.getElementById('taskList');
   const chips = document.getElementById('filterChips');
@@ -668,12 +656,11 @@ function renderTasks() {
   list.innerHTML = filtered.map(t => {
     const done = t.done_dates.includes(viewDate);
     const pri = t.priority || 'medium';
-    const priClass = 'priority-' + pri;
     return `<div class="task-item${done?' done':''}">
       <div class="checkbox${done?' checked':''}" onclick="toggleTask(${t.id})"></div>
       <div class="color-dot" style="background:${t.color}"></div>
       <div class="task-info">
-        <div class="task-title">${t.title} <span class="priority-badge ${priClass}">${pri}</span>${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260;</span>' : ''}</div>
+        <div class="task-title">${t.title} <span class="priority-dot ${pri}"></span>${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260;</span>' : ''}</div>
         <div class="task-meta"><span>${t.category}</span><span>${t.start} - ${t.end}</span>${t.notes ? '<span title="'+escHtml(t.notes)+'">&#128221; Notes</span>' : ''}</div>
       </div>
       <div class="task-actions">
@@ -683,17 +670,13 @@ function renderTasks() {
     </div>`;
   }).join('');
 }
-
 function setFilter(cat) { filterCategory = cat; renderTasks(); }
-
 const CAT_COLOR_PALETTE = ['#4f46e5','#ef4444','#10b981','#f59e0b','#06b6d4','#8b5cf6','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16','#22d3ee'];
-
 function nextCatColor() {
   const used = Object.values(state.colors);
   for (const c of CAT_COLOR_PALETTE) { if (!used.includes(c)) return c; }
   return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
 }
-
 function renderSettings() {
   const wg = document.getElementById('wallpaperGrid');
   const grads = ['gradient_1','gradient_2','gradient_3','gradient_4','gradient_5','gradient_6'];
@@ -713,11 +696,10 @@ function renderSettings() {
       <span style="width:14px;height:14px;border-radius:50%;background:${col};flex-shrink:0"></span>
       <span style="flex:1;font-size:.875rem">${c}${c==='Other'?' <span style="font-size:.65rem;color:var(--text2)">(default)</span>':''}</span>
       <input type="color" value="${col}" onchange="updateCategoryColor('${c}',this.value)" style="width:36px;height:30px;padding:2px;border-radius:6px;background:transparent;border:1px solid var(--border);cursor:pointer">
-      ${removable ? `<button class="btn btn-sm btn-ghost btn-icon" onclick="removeCategory('${c}')" title="Delete category" style="color:#ef4444;font-size:.85rem">&#10005;</button>` : ''}
+      ${removable ? `<button class="btn btn-sm btn-ghost btn-icon" onclick="removeCategory('${c}')" title="Delete category" style="color:#ef4444">&#10005;</button>` : ''}
     </div>`;
   }).join('');
 }
-
 async function addCategory() {
   const input = document.getElementById('newCatInput');
   const name = input.value.trim();
@@ -735,7 +717,6 @@ async function addCategory() {
   state.colors[name] = color;
   saveLocal(); input.value = ''; renderSettings(); showToast('Category added', 'success');
 }
-
 async function removeCategory(name) {
   if (name === 'Other') return;
   const confirmed = await showConfirm('Delete "'+name+'"? Tasks in this category will be moved to "Other".', 'Delete');
@@ -753,8 +734,6 @@ async function removeCategory(name) {
   state.tasks.forEach(t => { if (t.category === name) { t.category = 'Other'; t.color = state.colors['Other'] || '#64748b'; } });
   saveLocal(); renderSettings(); refreshAll(); showToast('Category deleted', 'success');
 }
-
-// Modal
 function openAddModal(cat) {
   document.getElementById('modalTitle').textContent = 'Add Task';
   document.getElementById('taskId').value = '';
@@ -773,7 +752,6 @@ function openAddModal(cat) {
   document.getElementById('taskModal').classList.add('active');
   setTimeout(() => document.getElementById('taskTitle').focus(), 100);
 }
-
 function editTask(id) {
   const t = state.tasks.find(t => t.id === id);
   if (!t) return;
@@ -794,9 +772,7 @@ function editTask(id) {
   document.getElementById('taskModal').classList.add('active');
   setTimeout(() => document.getElementById('taskTitle').focus(), 100);
 }
-
 function closeModal() { document.getElementById('taskModal').classList.remove('active'); }
-
 async function saveTask() {
   const btn = document.getElementById('saveTaskBtn');
   if (btn.disabled) return;
@@ -821,7 +797,6 @@ async function saveTask() {
   } catch(e) { showToast('Failed to save task', 'error'); }
   btn.disabled = false; btn.textContent = id ? 'Update' : 'Add'; btn.style.opacity = '1';
 }
-
 async function deleteTask(id) {
   const confirmed = await showConfirm('Delete this task? This cannot be undone.', 'Delete');
   if (!confirmed) return;
@@ -831,7 +806,6 @@ async function deleteTask(id) {
     refreshAll();
   } catch(e) { showToast('Failed to delete task', 'error'); }
 }
-
 async function setWallpaper(g) {
   state.wallpaper = g; state.customWallpaper = null;
   document.getElementById('wallpaper').className = 'wallpaper ' + g;
@@ -840,7 +814,6 @@ async function setWallpaper(g) {
   }
   saveLocal(); renderSettings(); showToast('Wallpaper changed', 'success');
 }
-
 async function setCustomWallpaper(url) {
   state.wallpaper = 'custom'; state.customWallpaper = url || null;
   if (url) document.getElementById('wallpaper').style.background = 'url('+url+') center/cover';
@@ -850,7 +823,6 @@ async function setCustomWallpaper(url) {
   }
   saveLocal();
 }
-
 function updateCategoryColor(cat, color) {
   state.colors[cat] = color;
   if (isOnline && isFlaskMode()) {
@@ -859,7 +831,6 @@ function updateCategoryColor(cat, color) {
   saveLocal();
   showToast('Color updated', 'success');
 }
-
 function refreshAll() {
   const active = document.querySelector('.tab.active');
   if (active) {
@@ -870,15 +841,12 @@ function refreshAll() {
     if (tab === 'settings') renderSettings();
   }
 }
-
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
 function setViewMode(mode) {
   state.viewMode = mode;
   document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === mode));
   if (document.querySelector('.tab.active')?.dataset?.tab === 'schedule') renderSchedule();
 }
-
 function renderWeekView(grid, viewDate) {
   const d = parseDate(viewDate);
   const dayOfWeek = d.getDay();
@@ -894,17 +862,16 @@ function renderWeekView(grid, viewDate) {
     const dateStr = fmtDate(day);
     const isToday = dateStr === todayStr;
     html += `<div class="week-col${isToday?' today':''}">
-      <div class="week-col-header">${days[i]}<br><span style="font-weight:400;font-size:.65rem">${day.getDate()}</span></div>
+      <div class="week-col-header">${days[i]}<br><span style="font-weight:400;font-size:.7rem">${day.getDate()}</span></div>
       <div class="week-col-body">${allTasks.map(t => {
         const done = t.done_dates.includes(dateStr);
-        return `<div class="week-task${done?' done':''}" style="background:${t.color}${done?'80':''}" onclick="goToDate('${dateStr}')" title="${escHtml(t.title)}">${escHtml(t.title)} ${done ? '&#10003;' : ''}</div>`;
+        return `<div class="week-task${done?' done':''}" style="background:${t.color}" onclick="goToDate('${dateStr}')" title="${escHtml(t.title)}">${escHtml(t.title)} ${done ? '&#10003;' : ''}</div>`;
       }).join('')}</div>
     </div>`;
   }
   html += '</div>';
   grid.innerHTML = html;
 }
-
 function renderMonthView(grid, viewDate) {
   const d = parseDate(viewDate);
   const year = d.getFullYear(), month = d.getMonth();
@@ -938,7 +905,6 @@ function renderMonthView(grid, viewDate) {
   html += '</div>';
   grid.innerHTML = html;
 }
-
 function exportData() {
   const data = { tasks: state.tasks, categories: state.categories, colors: state.colors, exported: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
@@ -949,7 +915,6 @@ function exportData() {
   URL.revokeObjectURL(a.href);
   showToast('Data exported', 'success');
 }
-
 function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -972,7 +937,6 @@ function importData(event) {
   };
   reader.readAsText(file);
 }
-
 function getNextRepeatDate(repeat, fromDate) {
   if (!repeat || repeat === 'none') return null;
   const d = parseDate(fromDate);
@@ -988,7 +952,6 @@ function getNextRepeatDate(repeat, fromDate) {
   }
   return null;
 }
-
 let dragId = null;
 function onDragStart(ev, id) {
   dragId = id;
@@ -1018,12 +981,10 @@ function onDrop(ev, targetId) {
   showToast('Task times swapped', 'success');
   renderSchedule();
 }
-
 async function toggleTask(id) {
   try {
     const wasDone = state.tasks.find(t=>t.id===id)?.done_dates?.includes(state.viewDate||state.today);
     const nowDone = await apiToggleTask(id, state.viewDate || state.today);
-    // recurring: if task was not done before and now done, and has repeat rule
     if (!wasDone && nowDone) {
       const t = state.tasks.find(tt => tt.id === id);
       if (t && t.repeat && t.repeat !== 'none') {
@@ -1048,8 +1009,6 @@ document.addEventListener('keydown', e => {
     e.preventDefault(); saveTask();
   }
 });
-
-// Init
 (async function init() {
   await loadData();
   state.viewDate = state.today;
