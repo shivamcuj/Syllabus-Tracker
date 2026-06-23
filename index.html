@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syllabus Tracker</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#16213e;--card:#1e1e36;--border:#2a2a4a;--text:#e0e0f0;--text2:#8888aa;--primary:#4f46e5;--accent:#06b6d4;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);--bg-grad-1:#1a1a3e;--bg-grad-2:#16213e}
@@ -155,7 +160,42 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
 :root.light .cat-chip.active{border-color:rgba(79,70,229,.4);box-shadow:0 0 12px rgba(79,70,229,.15)}
 :root.light .wallpaper-opt.active{border-color:var(--primary);box-shadow:0 0 16px rgba(79,70,229,.2)}
 :root.light .modal-overlay{background:rgba(0,0,0,.25)}
-@media(max-width:600px){header{flex-direction:column;gap:12px;text-align:center}.stats-grid{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.timeline::before{left:50px}.timeline-time{width:38px;padding-right:6px;font-size:.65rem}.timeline-time .time-main{font-size:.7rem}.timeline-connector{width:16px}.timeline-card{margin:6px 0;padding:10px 12px;font-size:.8rem}}
+.view-switcher{display:flex;gap:2px;padding:3px;background:var(--surface);border-radius:8px;border:1px solid var(--border)}
+.view-switcher .view-btn{padding:5px 12px;border-radius:5px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-size:.7rem;font-weight:500;transition:all .15s}
+.view-switcher .view-btn.active{background:var(--primary);color:#fff}
+.view-switcher .view-btn:hover:not(.active){color:var(--text)}
+.priority-badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:.6rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.priority-high{background:#fef2f2;color:#dc2626}
+.priority-medium{background:#fffbeb;color:#d97706}
+.priority-low{background:#f0fdf4;color:#16a34a}
+:root.light .priority-high{background:#fef2f2}
+:root.light .priority-medium{background:#fffbeb}
+:root.light .priority-low{background:#f0fdf4}
+textArea.form-input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:.875rem;outline:none;resize:vertical;font-family:inherit;transition:border .2s}
+textArea.form-input:focus{border-color:var(--primary)}
+.notes-icon{margin-left:6px;opacity:.5;font-size:.7rem;cursor:default}
+.repeat-label{font-size:.6rem;padding:2px 8px;border-radius:8px;background:var(--surface2);color:var(--text2);display:inline-flex;align-items:center;gap:3px;margin-left:6px}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:12px}
+.week-col{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.week-col-header{padding:8px;text-align:center;font-size:.75rem;font-weight:600;border-bottom:1px solid var(--border);background:var(--surface)}
+.week-col.today .week-col-header{background:var(--primary);color:#fff}
+.week-col-body{padding:6px;min-height:120px}
+.week-task{padding:4px 8px;margin-bottom:4px;border-radius:4px;font-size:.7rem;font-weight:500;color:#fff;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:4px}
+.week-task:hover{transform:translateX(2px)}
+.week-task.done{opacity:.45;text-decoration:line-through}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.month-header{padding:6px;text-align:center;font-size:.7rem;font-weight:600;color:var(--text2)}
+.month-cell{aspect-ratio:1;padding:4px;border-radius:6px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all .1s;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:6px;font-size:.75rem;min-height:60px}
+.month-cell:hover{border-color:var(--primary)}
+.month-cell.today{background:var(--primary);color:#fff;font-weight:700}
+.month-cell.other{opacity:.3}
+.month-cell .dot-row{display:flex;gap:2px;flex-wrap:wrap;margin-top:4px;justify-content:center}
+.month-cell .task-dot{width:5px;height:5px;border-radius:50%}
+.month-cell .more-dots{font-size:.55rem;color:var(--text2)}
+.drag-handle{cursor:grab;opacity:0;transition:opacity .15s;font-size:.8rem;color:var(--text2);padding:0 4px}
+.timeline-card:hover .drag-handle{opacity:.5}
+.timeline-card.dragging{opacity:.4;border-style:dashed}
+@media(max-width:600px){header{flex-direction:column;gap:12px;text-align:center}.stats-grid{grid-template-columns:1fr 1fr}.form-row{grid-template-columns:1fr}.timeline::before{left:50px}.timeline-time{width:38px;padding-right:6px;font-size:.65rem}.timeline-time .time-main{font-size:.7rem}.timeline-connector{width:16px}.timeline-card{margin:6px 0;padding:10px 12px;font-size:.8rem}.week-grid{grid-template-columns:repeat(7,1fr);gap:4px;overflow-x:auto}.week-col{min-width:100px}.month-cell{min-height:40px;font-size:.65rem}}
 </style>
 </head>
 <body>
@@ -199,7 +239,7 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
 
   <div id="tabSchedule" class="tab-content" style="display:none">
     <div class="card">
-      <div class="card-header"><h2 id="scheduleTitle">Schedule</h2><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div>
+      <div class="card-header"><h2 id="scheduleTitle">Schedule</h2><div style="display:flex;gap:8px;align-items:center"><div class="view-switcher" id="viewSwitcher"><button class="view-btn active" data-view="day" onclick="setViewMode('day')">Day</button><button class="view-btn" data-view="week" onclick="setViewMode('week')">Week</button><button class="view-btn" data-view="month" onclick="setViewMode('month')">Month</button></div><button class="btn btn-sm btn-primary" onclick="openAddModal()">+ Add Task</button></div></div>
       <div class="card-body schedule" id="scheduleGrid"></div>
     </div>
   </div>
@@ -230,6 +270,17 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
       <div class="card-header"><h2>Categories & Colors</h2></div>
       <div class="card-body"><div id="categorySettings"></div></div>
     </div>
+    <div class="card">
+      <div class="card-header"><h2>Data</h2></div>
+      <div class="card-body">
+        <p style="font-size:.8rem;color:var(--text2);margin-bottom:16px">Export your tasks as a JSON backup file, or import previously exported data.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="exportData()">&#8595; Export JSON</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('importInput').click()">&#8593; Import JSON</button>
+          <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -259,6 +310,31 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
       <label>Color</label>
       <input type="color" id="taskColor" value="#4f46e5">
     </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="taskPriority">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Repeat</label>
+        <select id="taskRepeat">
+          <option value="none">No repeat</option>
+          <option value="daily">Daily</option>
+          <option value="weekdays">Weekdays (Mon-Fri)</option>
+          <option value="weekly">Weekly</option>
+          <option value="mon,wed,fri">Mon, Wed, Fri</option>
+          <option value="tue,thu">Tue, Thu</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea id="taskNotes" class="form-input" rows="2" placeholder="Optional notes..."></textarea>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       <button class="btn btn-primary" id="saveTaskBtn" onclick="saveTask()">Save</button>
@@ -281,7 +357,7 @@ header h1 span{background:linear-gradient(135deg,var(--primary),var(--accent));-
 
 <script>
 const API_BASE = '';
-let state = { tasks: [], categories: {}, colors: {}, wallpaper: 'gradient_1', customWallpaper: null, theme: 'dark', today: '', viewDate: '' };
+let state = { tasks: [], categories: {}, colors: {}, wallpaper: 'gradient_1', customWallpaper: null, theme: 'dark', today: '', viewDate: '', viewMode: 'day' };
 let isOnline = true;
 let filterCategory = null;
 let confirmResolver = null;
@@ -321,6 +397,7 @@ function loadLocal() {
     state.wallpaper = d.wallpaper || 'gradient_1';
     state.customWallpaper = d.customWallpaper || null;
     state.theme = d.theme || 'dark';
+    state.viewMode = d.viewMode || 'day';
   } catch(e) {
     state.tasks = [];
     state.categories = ['Study','Gym','Art of Living','Coding','IIT Madras','Other'];
@@ -336,7 +413,7 @@ function saveLocal() {
   if (!isOnline) {
     localStorage.setItem('syllabus_data', JSON.stringify({
       tasks: state.tasks, categories: state.categories, colors: state.colors,
-      wallpaper: state.wallpaper, customWallpaper: state.customWallpaper, theme: state.theme
+      wallpaper: state.wallpaper, customWallpaper: state.customWallpaper, theme: state.theme, viewMode: state.viewMode
     }));
   }
 }
@@ -378,7 +455,7 @@ function shiftDay(delta) {
 }
 
 function goToDate(dateStr) {
-  if (dateStr) { state.viewDate = dateStr; updateDateNav(); refreshAll(); }
+  if (dateStr) { state.viewDate = dateStr; state.viewMode = 'day'; updateDateNav(); setViewMode('day'); }
 }
 
 function goToToday() {
@@ -437,6 +514,7 @@ async function apiAddTask(task) {
     return data.task;
   }
   task.id = Date.now(); task.done_dates = []; task.archived = false;
+  task.priority = task.priority || 'medium'; task.repeat = task.repeat || 'none'; task.notes = task.notes || '';
   state.tasks.push(task); saveLocal();
   return task;
 }
@@ -530,7 +608,10 @@ function renderDashboard() {
 
 function renderSchedule() {
   const grid = document.getElementById('scheduleGrid');
+  const viewMode = state.viewMode || 'day';
   const viewDate = state.viewDate || state.today;
+  if (viewMode === 'week') { renderWeekView(grid, viewDate); return; }
+  if (viewMode === 'month') { renderMonthView(grid, viewDate); return; }
   const tasks = state.tasks.filter(t => !t.archived).sort((a,b) => a.start.localeCompare(b.start));
   if (!tasks.length) { grid.innerHTML = '<div class="empty-state"><p>No tasks yet. Click "+ Add Task" to get started.</p></div>'; return; }
   const now = new Date();
@@ -542,13 +623,16 @@ function renderSchedule() {
     const sh = parseInt(t.start), sm = parseInt(t.start.split(':')[1]);
     const startMin = sh * 60 + sm;
     if (viewDate === state.today && !scrollId && startMin >= currentMin) scrollId = 'timelineTask' + t.id;
+    const pri = t.priority || 'medium';
+    const priClass = 'priority-' + pri;
     html += `<div class="timeline-item${done?' done':''}" id="timelineTask${t.id}">
       <div class="timeline-time"><div class="time-main">${t.start}</div>${t.end ? '<div>'+t.end+'</div>' : ''}</div>
       <div class="timeline-connector"><div class="timeline-dot"></div></div>
-      <div class="timeline-card" onclick="toggleTask(${t.id})" title="Click to toggle done">
+      <div class="timeline-card" draggable="true" ondragstart="onDragStart(event,${t.id})" ondragover="onDragOver(event)" ondrop="onDrop(event,${t.id})" onclick="toggleTask(${t.id})" title="Click to toggle done">
+        <span class="drag-handle">&#9776;</span>
         <div class="card-color-bar" style="background:${t.color}"></div>
         <div class="card-body">
-          <div class="card-title">${t.title}</div>
+          <div class="card-title">${t.title}<span class="priority-badge ${priClass}">${pri}</span>${t.notes ? '<span class="notes-icon" title="'+escHtml(t.notes)+'">&#128221;</span>' : ''}${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260; '+t.repeat+'</span>' : ''}</div>
           <div class="card-category">${t.category || 'Uncategorized'}</div>
         </div>
         <div class="card-actions">
@@ -583,12 +667,14 @@ function renderTasks() {
   filtered.sort((a,b) => a.start.localeCompare(b.start));
   list.innerHTML = filtered.map(t => {
     const done = t.done_dates.includes(viewDate);
+    const pri = t.priority || 'medium';
+    const priClass = 'priority-' + pri;
     return `<div class="task-item${done?' done':''}">
       <div class="checkbox${done?' checked':''}" onclick="toggleTask(${t.id})"></div>
       <div class="color-dot" style="background:${t.color}"></div>
       <div class="task-info">
-        <div class="task-title">${t.title}</div>
-        <div class="task-meta"><span>${t.category}</span><span>${t.start} - ${t.end}</span></div>
+        <div class="task-title">${t.title} <span class="priority-badge ${priClass}">${pri}</span>${t.repeat && t.repeat !== 'none' ? '<span class="repeat-label">&#128260;</span>' : ''}</div>
+        <div class="task-meta"><span>${t.category}</span><span>${t.start} - ${t.end}</span>${t.notes ? '<span title="'+escHtml(t.notes)+'">&#128221; Notes</span>' : ''}</div>
       </div>
       <div class="task-actions">
         <button class="btn btn-sm btn-ghost btn-icon" onclick="editTask(${t.id})" title="Edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
@@ -624,6 +710,9 @@ function openAddModal(cat) {
   document.getElementById('taskStart').value = '09:00';
   document.getElementById('taskEnd').value = '10:00';
   document.getElementById('taskColor').value = state.colors[cat||'Other']||'#4f46e5';
+  document.getElementById('taskPriority').value = 'medium';
+  document.getElementById('taskRepeat').value = 'none';
+  document.getElementById('taskNotes').value = '';
   document.getElementById('saveTaskBtn').textContent = 'Add';
   document.getElementById('saveTaskBtn').disabled = false;
   document.getElementById('saveTaskBtn').style.opacity = '1';
@@ -642,6 +731,9 @@ function editTask(id) {
   document.getElementById('taskStart').value = t.start;
   document.getElementById('taskEnd').value = t.end;
   document.getElementById('taskColor').value = t.color;
+  document.getElementById('taskPriority').value = t.priority || 'medium';
+  document.getElementById('taskRepeat').value = t.repeat || 'none';
+  document.getElementById('taskNotes').value = t.notes || '';
   document.getElementById('saveTaskBtn').textContent = 'Update';
   document.getElementById('saveTaskBtn').disabled = false;
   document.getElementById('saveTaskBtn').style.opacity = '1';
@@ -662,7 +754,10 @@ async function saveTask() {
     category: document.getElementById('taskCategory').value,
     start: document.getElementById('taskStart').value,
     end: document.getElementById('taskEnd').value,
-    color: document.getElementById('taskColor').value
+    color: document.getElementById('taskColor').value,
+    priority: document.getElementById('taskPriority').value,
+    repeat: document.getElementById('taskRepeat').value,
+    notes: document.getElementById('taskNotes').value.trim() || ''
   };
   if (data.start >= data.end) { showToast('End time must be after start time', 'error'); return; }
   btn.disabled = true; btn.textContent = 'Saving...'; btn.style.opacity = '.6';
@@ -683,13 +778,6 @@ async function deleteTask(id) {
     showToast('Task deleted', 'success');
     refreshAll();
   } catch(e) { showToast('Failed to delete task', 'error'); }
-}
-
-async function toggleTask(id) {
-  try {
-    await apiToggleTask(id, state.viewDate || state.today);
-    refreshAll();
-  } catch(e) { showToast('Failed to toggle task', 'error'); }
 }
 
 async function setWallpaper(g) {
@@ -715,7 +803,8 @@ function updateCategoryColor(cat, color) {
   state.colors[cat] = color;
   if (isOnline && isFlaskMode()) {
     state.tasks.filter(t => t.category === cat).forEach(t => { t.color = color; apiUpdateTask(t.id, {color:color}); });
-  } else saveLocal();
+  }
+  saveLocal();
   showToast('Color updated', 'success');
 }
 
@@ -730,7 +819,177 @@ function refreshAll() {
   }
 }
 
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+function setViewMode(mode) {
+  state.viewMode = mode;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === mode));
+  if (document.querySelector('.tab.active')?.dataset?.tab === 'schedule') renderSchedule();
+}
+
+function renderWeekView(grid, viewDate) {
+  const d = parseDate(viewDate);
+  const dayOfWeek = d.getDay();
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - ((dayOfWeek + 6) % 7));
+  const todayStr = state.today;
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const allTasks = state.tasks.filter(t => !t.archived).sort((a,b) => a.start.localeCompare(b.start));
+  let html = '<div class="week-grid">';
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + i);
+    const dateStr = fmtDate(day);
+    const isToday = dateStr === todayStr;
+    html += `<div class="week-col${isToday?' today':''}">
+      <div class="week-col-header">${days[i]}<br><span style="font-weight:400;font-size:.65rem">${day.getDate()}</span></div>
+      <div class="week-col-body">${allTasks.map(t => {
+        const done = t.done_dates.includes(dateStr);
+        return `<div class="week-task${done?' done':''}" style="background:${t.color}${done?'80':''}" onclick="goToDate('${dateStr}')" title="${escHtml(t.title)}">${escHtml(t.title)} ${done ? '&#10003;' : ''}</div>`;
+      }).join('')}</div>
+    </div>`;
+  }
+  html += '</div>';
+  grid.innerHTML = html;
+}
+
+function renderMonthView(grid, viewDate) {
+  const d = parseDate(viewDate);
+  const year = d.getFullYear(), month = d.getMonth();
+  const first = new Date(year, month, 1);
+  const last = new Date(year, month + 1, 0);
+  const startPad = (first.getDay() + 6) % 7;
+  const daysInMonth = last.getDate();
+  const todayStr = state.today;
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const allTasks = state.tasks.filter(t => !t.archived);
+  let html = '<div class="month-grid">';
+  days.forEach(day => { html += '<div class="month-header">'+day+'</div>'; });
+  for (let i = 0; i < startPad; i++) html += '<div class="month-cell other"></div>';
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dateStr = fmtDate(date);
+    const isToday = dateStr === todayStr;
+    const doneCount = allTasks.filter(t => t.done_dates.includes(dateStr)).length;
+    const totalCount = allTasks.length;
+    const pct = totalCount > 0 ? doneCount / totalCount : 0;
+    const fillColor = pct === 1 ? '#10b981' : pct > 0.5 ? '#f59e0b' : pct > 0 ? '#ef4444' : 'transparent';
+    html += `<div class="month-cell${isToday?' today':''}" onclick="goToDate('${dateStr}')">
+      <span>${day}</span>
+      ${doneCount > 0 ? '<div class="dot-row"><span class="task-dot" style="background:'+fillColor+';width:7px;height:7px"></span></div>' : ''}
+      <span style="font-size:.55rem;color:var(--text2)">${doneCount}/${totalCount}</span>
+    </div>`;
+  }
+  const totalCells = startPad + daysInMonth;
+  const rem = (7 - totalCells % 7) % 7;
+  for (let i = 0; i < rem; i++) html += '<div class="month-cell other"></div>';
+  html += '</div>';
+  grid.innerHTML = html;
+}
+
+function exportData() {
+  const data = { tasks: state.tasks, categories: state.categories, colors: state.colors, exported: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'syllabus_backup_' + state.today + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Data exported', 'success');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.tasks || !Array.isArray(data.tasks)) { showToast('Invalid backup file', 'error'); return; }
+      state.tasks = data.tasks;
+      if (data.categories) state.categories = data.categories;
+      if (data.colors) state.colors = data.colors;
+      saveLocal();
+      if (isOnline && isFlaskMode()) {
+        getApi('/api/tasks', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({_bulk:data.tasks}) }).catch(()=>{});
+      }
+      showToast('Imported ' + data.tasks.length + ' tasks', 'success');
+      refreshAll();
+    } catch(err) { showToast('Failed to parse file', 'error'); }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function getNextRepeatDate(repeat, fromDate) {
+  if (!repeat || repeat === 'none') return null;
+  const d = parseDate(fromDate);
+  d.setDate(d.getDate() + 1);
+  if (repeat === 'daily') return fmtDate(d);
+  if (repeat === 'weekly') { d.setDate(d.getDate() + 6); return fmtDate(d); }
+  const weekdayNames = ['sun','mon','tue','wed','thu','fri','sat'];
+  const repeatDays = repeat.split(',').map(s => s.trim().toLowerCase().substring(0,3));
+  for (let i = 0; i < 14; i++) {
+    const dayName = weekdayNames[d.getDay()];
+    if (repeatDays.includes(dayName)) return fmtDate(d);
+    d.setDate(d.getDate() + 1);
+  }
+  return null;
+}
+
+let dragId = null;
+function onDragStart(ev, id) {
+  dragId = id;
+  ev.dataTransfer.effectAllowed = 'move';
+  ev.target.classList.add('dragging');
+}
+function onDragOver(ev) { ev.preventDefault(); ev.dataTransfer.dropEffect = 'move'; }
+function onDrop(ev, targetId) {
+  ev.preventDefault();
+  document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+  if (dragId === null || dragId === targetId) { dragId = null; return; }
+  const tasks = state.tasks.filter(t => !t.archived);
+  const srcIdx = tasks.findIndex(t => t.id === dragId);
+  const dstIdx = tasks.findIndex(t => t.id === targetId);
+  if (srcIdx === -1 || dstIdx === -1) { dragId = null; return; }
+  const src = tasks[srcIdx];
+  const dst = tasks[dstIdx];
+  const tempStart = src.start, tempEnd = src.end;
+  src.start = dst.start; src.end = dst.end;
+  dst.start = tempStart; dst.end = tempEnd;
+  saveLocal();
+  if (isOnline && isFlaskMode()) {
+    apiUpdateTask(src.id, {start:src.start,end:src.end});
+    apiUpdateTask(dst.id, {start:dst.start,end:dst.end});
+  }
+  dragId = null;
+  showToast('Task times swapped', 'success');
+  renderSchedule();
+}
+
+async function toggleTask(id) {
+  try {
+    const wasDone = state.tasks.find(t=>t.id===id)?.done_dates?.includes(state.viewDate||state.today);
+    const nowDone = await apiToggleTask(id, state.viewDate || state.today);
+    // recurring: if task was not done before and now done, and has repeat rule
+    if (!wasDone && nowDone) {
+      const t = state.tasks.find(tt => tt.id === id);
+      if (t && t.repeat && t.repeat !== 'none') {
+        const nextDate = getNextRepeatDate(t.repeat, state.viewDate || state.today);
+        if (nextDate) {
+          const newTask = { ...t, id: Date.now(), done_dates: [], archived: false, title: t.title };
+          state.tasks.push(newTask);
+          saveLocal();
+          if (isOnline && isFlaskMode()) {
+            try { await getApi('/api/tasks', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(newTask) }); } catch(e){}
+          }
+          showToast('Recurring task created for ' + nextDate, 'success');
+        }
+      }
+    }
+    refreshAll();
+  } catch(e) { showToast('Failed to toggle task', 'error'); }
+}
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeModal(); closeConfirm(false); }
   if (e.key === 'Enter' && document.getElementById('taskModal').classList.contains('active') && e.target.closest('.modal')) {
@@ -749,6 +1008,9 @@ document.addEventListener('keydown', e => {
   renderSchedule();
   renderTasks();
   renderSettings();
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 })();
 </script>
 </body>
